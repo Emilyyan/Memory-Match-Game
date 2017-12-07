@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import square from './square.vue'
+import square from './square'
 
 export default {
   name: 'Board',

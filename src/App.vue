@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <board></board>
+    <Board/>
   </div>
 </template>
 
 <script>
-import Board from './components/Board.vue'
+import Board from './components/Board'
 
 export default {
   name: 'app',
