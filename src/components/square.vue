@@ -2,7 +2,7 @@
     <div>
         <label>This is Square Component</label>
         <div>
-          <img class="squareclass" v-bind:src="image_src" alt="Pokemon" />
+          <img class="squareclass" v-bind:src="img_src" alt="Pokemon" />
         </div>
     </div>
 
@@ -10,7 +10,8 @@
 
 <script>
 export default {
-  name: 'square'
+  name: 'square',
+  props:['img_src']
 }
 </script>
 
