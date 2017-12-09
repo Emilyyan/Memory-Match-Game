@@ -1,20 +1,16 @@
 <template>
-    <div>
-        <label>This is Square Component</label>
-        <div>
-          <img class="squareclass" v-bind:src="img_src" alt="Pokemon" />
-        </div>
-    </div>
-
+  <img class="squareclass" v-bind:src="img_src" alt="Pokemon" />
 </template>
 
 <script>
 export default {
   name: 'square',
-  props:['img_src']
+  props:{
+    img_src:'',
+    id: null
+  }
 }
 </script>
-
 
 <style scoped>
 .squareclass {
