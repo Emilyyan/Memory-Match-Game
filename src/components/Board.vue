@@ -6,10 +6,6 @@
         <square v-bind:img_src="parentMsg[1]"></square>
         <square v-bind:img_src="parentMsg[2]"></square>
         <square v-bind:img_src="parentMsg[3]"></square>
-
-        <div>
-          <label>The hard level is: {{hard_level}}</label>
-        </div>
       </div>
     </div>
 
