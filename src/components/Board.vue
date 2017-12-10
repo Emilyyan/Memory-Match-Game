@@ -1,7 +1,10 @@
 <template>
     <div>
-      <label>{{msg}}</label>
       <div class="board-row">
+        <template v-if="hard_level === 12">
+          <h1>Current level: difficult</h1>
+        </template>
+
         <square v-bind:img_src="parentMsg[0]"></square>
         <square v-bind:img_src="parentMsg[1]"></square>
         <square v-bind:img_src="parentMsg[2]"></square>
@@ -16,25 +19,50 @@ import square from './square'
 
 export default {
   name: 'Board',
-  props: ['hard_level'],
+  props: {'hard_level':Number},
   data () {
     return {
-      msg: 'Welcome to board component',
-      parentMsg:['https://pbs.twimg.com/profile_images/936736533457002496/d9vv-4Yn_400x400.jpg', 
-                'https://i.pinimg.com/736x/83/72/12/837212dd8b71f9b5d175ac98f2c7668a--pikachu-tail-pokemon.jpg',
-                'https://i.pinimg.com/736x/d3/9b/39/d39b3927b6ea9146cf19596ecbbb92bf--pokemon-lol-pokemon-starters.jpg',
-                'https://wh1k8zidop.inscname.net/big/3258.jpg?v=1462392319']
+      parentMsg:["./static/pokemons/004-charmander@3x.png", 
+                "./static/pokemons/007-squirtle@3x.png",
+                "./static/pokemons/039-jigglypuff@3x.png",
+                "./static/pokemons/050-diglett@3x.png"]
     }
   },
-
   components: {
     square
   },
-
-  method: {
+  methods: {
      shuffle: function () {
       this.parentMsg = _.shuffle(this.parentMsg)
-     }
+     },
+  },
+  computed: {
+    /*initBoard(){
+        var block;
+        switch(this.hard_level){
+          case 12:
+            block = `
+              <square v-bind:img_src="parentMsg[2]"></square>
+            `;
+            break;
+          case 1: 
+          block = `
+              <hr>haha<br/>
+            `;
+            break;
+          case 2: 
+          block = `
+              <hr>haha<br/>
+            `;
+            break;
+          case 3: 
+          block = `
+              <hr>haha<br/>
+            `;
+            break;
+       }
+       return block;
+    }*/
   }
 }
 </script>
