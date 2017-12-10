@@ -4,11 +4,7 @@
         <template v-if="hard_level === 12">
           <h1>Current level: difficult</h1>
         </template>
-
-        <square v-bind:img_src="parentMsg[0]"></square>
-        <square v-bind:img_src="parentMsg[1]"></square>
-        <square v-bind:img_src="parentMsg[2]"></square>
-        <square v-bind:img_src="parentMsg[3]"></square>
+        <square v-for="img in parentMsg" :key="img" :img_src="img"></square>
       </div>
     </div>
 
@@ -24,17 +20,21 @@ export default {
     return {
       parentMsg:["./static/pokemons/004-charmander@3x.png", 
                 "./static/pokemons/007-squirtle@3x.png",
-                "./static/pokemons/039-jigglypuff@3x.png",
-                "./static/pokemons/050-diglett@3x.png"]
+                "./static/pokemons/006-charizard@3x.png",
+                "./static/pokemons/016-pidgey@3x.png"]
     }
   },
   components: {
     square
   },
   methods: {
-     shuffle: function () {
-      this.parentMsg = _.shuffle(this.parentMsg)
-     },
+    shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
   },
   computed: {
     /*initBoard(){
