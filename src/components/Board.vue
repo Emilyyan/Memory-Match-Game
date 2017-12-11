@@ -22,7 +22,6 @@ export default {
   props: {
       hard_level: Number,
       board_img: Array
-
   },
 
   data () {

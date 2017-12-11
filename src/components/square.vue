@@ -4,9 +4,9 @@
     <img class="squareclass" :src="img_src" alt="Pokémon" />
   </div>
 -->
-  <div>
+  
       <sui-image :src="img_src" size="tiny" /> 
-  </div>
+
  
 </template>
 
