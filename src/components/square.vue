@@ -14,13 +14,18 @@
 export default {
   name: 'square',
   props:{
-    img_src: String,
+    img_src_idx: Number,
     id: null
   },
   methods: {
     loadImg: function () {
       //console.log(this.img_src);
       return 1;
+    }
+  },
+  computed: {
+    img_src(){
+      return "./static/pokemons/"+this.img_src_idx+".png";
     }
   }
 }

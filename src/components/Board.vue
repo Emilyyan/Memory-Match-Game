@@ -1,15 +1,14 @@
 <template>
     <div>
-      <label>{{msg}}</label>
-      <br>
       <label>The hard level received by board is {{hard_level}}</label>
       <br>
       <label>{{board_img}}</label>
       <div class="board-row">
         <template v-if="hard_level === 12">
           <h1>Current level: difficult</h1>
+          <square v-for="idx in sqrArr" :key="idx" :img_src_idx="idx"></square>
         </template>
-        <square v-for="img in parentMsg" :key="img" :img_src="img"></square>
+        
       </div>
     </div>
 
@@ -28,10 +27,8 @@ export default {
 
   data () {
     return {
-      parentMsg:["./static/pokemons/004-charmander@3x.png", 
-                "./static/pokemons/007-squirtle@3x.png",
-                "./static/pokemons/006-charizard@3x.png",
-                "./static/pokemons/016-pidgey@3x.png"]
+      /*sample image route: "./static/pokemons/1.png" */
+      sqrArr:[1,2,3,4,5,6,2,5,3,4,6,1]
     }
   },
   components: {
@@ -48,6 +45,7 @@ export default {
     }
   },
   computed: {
+    
     /*initBoard(){
         var block;
         switch(this.hard_level){
