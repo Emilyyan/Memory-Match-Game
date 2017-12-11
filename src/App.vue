@@ -15,10 +15,13 @@
             icon="game"
             :button="true"
             text="Start Game"
-            v-model="hardLevel"
           >
             <sui-dropdown-menu>
-              <sui-dropdown-item>
+              <sui-dropdown-item v-for="option , index in hardLevel"  v-bind:value="option.value" v-on:click.native="setLevel(index)">
+                <sui-label color="teal" class="empty circular"/>
+                {{ option.text }}
+              </sui-dropdown-item>
+              <!--<sui-dropdown-item>
                 <sui-label color="teal" class="empty circular"/>
                 Easy
               </sui-dropdown-item>
@@ -33,7 +36,7 @@
               <sui-dropdown-item>
                 <sui-label color="red" class="empty circular"/>
                 Expert
-              </sui-dropdown-item>
+              </sui-dropdown-item>-->
             </sui-dropdown-menu>
           </sui-dropdown>
           <!--===========Dropdown menu ends============-->
@@ -55,11 +58,11 @@
           <b>Time:</b> <Timer date="Dec 25, 2017"/>
         </sui-grid-row>
         <sui-grid-row>
-          <b>Current level:</b> {{hardLevel}}
+          <b>Current level:</b> {{selected[0]}}
         </sui-grid-row>
       </sui-grid-column>
       <sui-grid-column :width="12">
-        <Board :hard_level ="hardLevel"/>
+        <Board v-bind:hard_level ="selected[0]" v-bind:board_img ="img"/>
       </sui-grid-column>
     </sui-grid>
     
@@ -78,6 +81,7 @@
 </template>
 
 <script>
+
 import Board from './components/Board'
 import Timer from './components/Timer'
 
@@ -85,7 +89,17 @@ export default {
   name: 'app',
   data () {
     return {
-      hardLevel: 12
+      //hardLevel: 12
+      //selected: 12,
+      selected:[12],
+      hardLevel: [
+      { text: 'Easy', value: 12 },
+      { text: 'Medium', value: 16 },
+      { text: 'Hard', value: 20 },
+      { text: 'Expert', value: 36 }
+      ],
+
+      img: []
     }
   },
 
@@ -94,11 +108,25 @@ export default {
   },
   
   methods: {
-    set_level: function (hardLevel) {
-      return this.hardLevel === hardLevel;
+    setLevel: function (index) {
+      this.selected = []; 
+      this.selected.push(this.hardLevel[index].value);
+
+      //generate shuffled img array
+      let puzzleArr = [],
+          i = 1
+
+          for (i=0; i < this.selected[0]; i++) {
+            puzzleArr.push(Math.floor(i/2));
+          }
+
+          puzzleArr = puzzleArr.sort(() => {
+              return Math.random() - 0.5
+          });
+
+          this.img = puzzleArr
      }
   }
-
 }
 
 </script>

@@ -1,6 +1,10 @@
 <template>
     <div>
       <label>{{msg}}</label>
+      <br>
+      <label>The hard level received by board is {{hard_level}}</label>
+      <br>
+      <label>{{board_img}}</label>
       <div class="board-row">
         <square v-bind:img_src="parentMsg[0]"></square>
         <square v-bind:img_src="parentMsg[1]"></square>
@@ -16,7 +20,12 @@ import square from './square'
 
 export default {
   name: 'Board',
-  props: ['hard_level'],
+  props: {
+      hard_level: null,
+      board_img: Array
+
+  },
+
   data () {
     return {
       msg: 'Welcome to board component',
@@ -29,12 +38,6 @@ export default {
 
   components: {
     square
-  },
-
-  method: {
-     shuffle: function () {
-      this.parentMsg = _.shuffle(this.parentMsg)
-     }
   }
 }
 </script>
