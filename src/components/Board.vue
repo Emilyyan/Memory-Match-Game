@@ -10,7 +10,7 @@
           <sui-grid class="container">
             <sui-grid-column :width="8">
               <sui-grid :columns="4">
-                <square v-for="(idx,key) in board_img" :id="key" :num="idx" :key="key" :img_src_idx="idx"></square>
+                <square v-for="(idx,key) in board_img" :id="key" :num="idx" :key="key" :img_src_idx="idx" @click.native="tryMatch(idx,key)" v-bind:class="matchedItems[key]"></square>
               </sui-grid>
             </sui-grid-column>
             <sui-grid-column :width="8"/>
@@ -65,8 +65,35 @@ export default {
 
   data () {
     return {
+      firstImgIdx: null,
+      firstElementId: null,
+      matchedItems: []
     }
   },
+
+  methods: {
+    tryMatch: function (idx, key) {
+      if(!this.firstImgIdx){
+        this.firstImgIdx = idx;
+        this.firstElementId = key;
+      }
+      else if(this.firstImgIdx){
+          if(this.firstImgIdx == idx && this.firstElementId != key){
+            this.$set(this.matchedItems, this.firstElementId, "matched");
+            this.$set(this.matchedItems, key, "matched");
+          }  
+          else{
+            $("#"+this.firstElementId).flip('toggle');
+            $("#"+key).flip('toggle');
+          }
+          
+          this.firstElementId = null;
+          this.firstImgIdx = null;
+          return;
+      }
+    }
+  },
+
   components: {
     square
   }
@@ -78,5 +105,9 @@ export default {
   clear: both;
   content: "";
   display: table;
+}
+
+.matched{
+  visibility: hidden
 }
 </style>
