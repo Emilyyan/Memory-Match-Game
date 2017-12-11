@@ -4,9 +4,9 @@
       <br>
       <label>{{board_img}}</label>
       <div class="board-row">
-        <template v-if="hard_level === 12">
+        <template>
           <h1>Current level: difficult</h1>
-          <square v-for="idx in sqrArr" :key="idx" :img_src_idx="idx"></square>
+          <square v-for="idx in board_img" :id="idx" :img_src_idx="idx"></square>
         </template>
         
       </div>

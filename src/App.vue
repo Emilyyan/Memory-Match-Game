@@ -117,7 +117,7 @@ export default {
           i = 1
 
           for (i=0; i < this.selected[0]; i++) {
-            puzzleArr.push(Math.floor(i/2));
+            puzzleArr.push(Math.floor(i/2)+1);
           }
 
           puzzleArr = puzzleArr.sort(() => {
