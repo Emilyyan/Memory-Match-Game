@@ -1,13 +1,14 @@
 <template>
-<!--
-  <div>
-    <img class="squareclass" :src="img_src" alt="Pokémon" />
-  </div>
--->
-  
-      <sui-image :src="img_src" size="tiny" /> 
-
- 
+    <sui-grid-column>
+      <div class="card" :id="id" @click="flip">
+        <div class="front">
+          <sui-image :src="back_img_path" size="tiny" class="bordered"/>
+        </div>
+        <div class="back">
+          <sui-image :src="img_src" size="tiny" class="bordered"/>
+        </div>
+      </div>   
+    </sui-grid-column>
 </template>
 
 <script>
@@ -15,12 +16,20 @@ export default {
   name: 'square',
   props:{
     img_src_idx: Number,
-    id: null
+    id: Number,
+    num: Number
+  },
+  data(){
+    return{
+      back_img_path: "./static/question.png"
+    }
+  },
+  mounted(){
+    $(".card").flip();
   },
   methods: {
-    loadImg: function () {
-      //console.log(this.img_src);
-      return 1;
+    flip: function() {
+      $("#"+this.key).flip('toggle');
     }
   },
   computed: {
@@ -32,18 +41,15 @@ export default {
 </script>
 
 <style scoped>
-.squareclass {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 80px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 80px;
+.card{
+  width:100%;
+  height:76.78px;
 }
+.card .front{
+  background: #656565;
+}
+.card .back{
+  background-color: #d6f6ff;
+}
+
 </style>

@@ -5,10 +5,6 @@
         class="container"
       >
         <sui-grid-column>
-          <!--
-            <input id="hardLevel" name="hardLevel" />
-            <sui-button v-on:click="set_level(hardLevel)" primary>Submit hardLevel</sui-button>
-          -->
           <!--=======Dropdown menu to start game========-->
           <sui-dropdown
             class="labeled teal icon"
@@ -17,26 +13,15 @@
             text="Start Game"
           >
             <sui-dropdown-menu>
-              <sui-dropdown-item v-for="option , index in hardLevel"  v-bind:value="option.value" v-on:click.native="setLevel(index)">
-                <sui-label color="teal" class="empty circular"/>
+              <sui-dropdown-item 
+                v-for="(option,index) in hardLevel"  
+                :value="option.value" 
+                :key="index" 
+                @click.native="setLevel(index)"
+              >
+                <sui-label :color="option.color" class="empty circular"/>
                 {{ option.text }}
               </sui-dropdown-item>
-              <!--<sui-dropdown-item>
-                <sui-label color="teal" class="empty circular"/>
-                Easy
-              </sui-dropdown-item>
-              <sui-dropdown-item class="selected">
-                <sui-label color="blue" class="empty circular"/>
-                Medium
-              </sui-dropdown-item>
-              <sui-dropdown-item>
-                <sui-label color="yellow" class="empty circular"/>
-                Difficult
-              </sui-dropdown-item>
-              <sui-dropdown-item>
-                <sui-label color="red" class="empty circular"/>
-                Expert
-              </sui-dropdown-item>-->
             </sui-dropdown-menu>
           </sui-dropdown>
           <!--===========Dropdown menu ends============-->
@@ -48,11 +33,9 @@
       class="container"
       divided
     >
-  
       <sui-grid-column 
         :width="4"
-      >
-          
+      >  
         <!--===Count down to Dec 25, 2017===-->
         <sui-grid-row>
           <b>Time:</b> <Timer date="Dec 25, 2017"/>
@@ -89,16 +72,13 @@ export default {
   name: 'app',
   data () {
     return {
-      //hardLevel: 12
-      //selected: 12,
-      selected:[12],
+      selected:[],
       hardLevel: [
-      { text: 'Easy', value: 12 },
-      { text: 'Medium', value: 16 },
-      { text: 'Hard', value: 20 },
-      { text: 'Expert', value: 36 }
+      { text: 'Easy', color:'teal', value: 12 },
+      { text: 'Medium', color:'blue', value: 16 },
+      { text: 'Hard', color:'yellow', value: 20 },
+      { text: 'Expert', color:'red', value: 36 }
       ],
-
       img: []
     }
   },
