@@ -83,8 +83,13 @@ export default {
             this.$set(this.matchedItems, key, "matched");
           }  
           else{
-            $("#"+this.firstElementId).flip('toggle');
-            $("#"+key).flip('toggle');
+            var firstID = this.firstElementId;
+            setTimeout(function(){ 
+              console.log(this.firstElementId);
+              $("#"+firstID).flip('toggle');
+              $("#"+key).flip('toggle'); 
+            }, 1500);
+           
           }
           
           this.firstElementId = null;
