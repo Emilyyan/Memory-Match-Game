@@ -1,15 +1,18 @@
 <template>
     <div>
+<<<<<<< HEAD
       <label>{{msg}}</label>
       <br>
       <label>The hard level received by board is {{hard_level}}</label>
       <br>
       <label>{{board_img}}</label>
+=======
+>>>>>>> 512124ca7df7e6e2a20a13fcd79d29dee977c04d
       <div class="board-row">
-        <square v-bind:img_src="parentMsg[0]"></square>
-        <square v-bind:img_src="parentMsg[1]"></square>
-        <square v-bind:img_src="parentMsg[2]"></square>
-        <square v-bind:img_src="parentMsg[3]"></square>
+        <template v-if="hard_level === 12">
+          <h1>Current level: difficult</h1>
+        </template>
+        <square v-for="img in parentMsg" :key="img" :img_src="img"></square>
       </div>
     </div>
 
@@ -20,24 +23,66 @@ import square from './square'
 
 export default {
   name: 'Board',
+<<<<<<< HEAD
   props: {
       hard_level: null,
       board_img: Array
 
   },
 
+=======
+  props: {'hard_level':Number},
+>>>>>>> 512124ca7df7e6e2a20a13fcd79d29dee977c04d
   data () {
     return {
-      msg: 'Welcome to board component',
-      parentMsg:['https://pbs.twimg.com/profile_images/936736533457002496/d9vv-4Yn_400x400.jpg', 
-                'https://i.pinimg.com/736x/83/72/12/837212dd8b71f9b5d175ac98f2c7668a--pikachu-tail-pokemon.jpg',
-                'https://i.pinimg.com/736x/d3/9b/39/d39b3927b6ea9146cf19596ecbbb92bf--pokemon-lol-pokemon-starters.jpg',
-                'https://wh1k8zidop.inscname.net/big/3258.jpg?v=1462392319']
+      parentMsg:["./static/pokemons/004-charmander@3x.png", 
+                "./static/pokemons/007-squirtle@3x.png",
+                "./static/pokemons/006-charizard@3x.png",
+                "./static/pokemons/016-pidgey@3x.png"]
     }
   },
-
   components: {
     square
+<<<<<<< HEAD
+=======
+  },
+  methods: {
+    shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+  },
+  computed: {
+    /*initBoard(){
+        var block;
+        switch(this.hard_level){
+          case 12:
+            block = `
+              <square v-bind:img_src="parentMsg[2]"></square>
+            `;
+            break;
+          case 1: 
+          block = `
+              <hr>haha<br/>
+            `;
+            break;
+          case 2: 
+          block = `
+              <hr>haha<br/>
+            `;
+            break;
+          case 3: 
+          block = `
+              <hr>haha<br/>
+            `;
+            break;
+       }
+       return block;
+    }*/
+>>>>>>> 512124ca7df7e6e2a20a13fcd79d29dee977c04d
   }
 }
 </script>

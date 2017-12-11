@@ -1,13 +1,27 @@
 <template>
-  <img class="squareclass" v-bind:src="img_src" alt="Pokemon" />
+<!--
+  <div>
+    <img class="squareclass" :src="img_src" alt="Pokémon" />
+  </div>
+-->
+  <div>
+      <sui-image :src="img_src" size="tiny" /> 
+  </div>
+ 
 </template>
 
 <script>
 export default {
   name: 'square',
   props:{
-    img_src:'',
+    img_src: String,
     id: null
+  },
+  methods: {
+    loadImg: function () {
+      //console.log(this.img_src);
+      return 1;
+    }
   }
 }
 </script>
