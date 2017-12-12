@@ -17,7 +17,7 @@
                 v-for="(option,index) in hardLevel"  
                 :value="option.value" 
                 :key="index" 
-                @click.native="setLevel(index)"
+                @click.native="setLevel(index);setTimer()"
               >
                 <sui-label :color="option.color" class="empty circular"/>
                 {{ option.text }}
@@ -38,7 +38,9 @@
       >  
         <!--===Count down to Dec 25, 2017===-->
         <sui-grid-row>
-          <b>Time:</b> <Timer date="Dec 25, 2017"/>
+          <!--<b>Time:</b> <Timer date="Dec 25, 2017"/>-->
+          <br><b>Time Left: </b>{{timer}} seconds
+          <!--<Countdown></CountDown>-->
         </sui-grid-row>
         <sui-grid-row>
           <b>Current level:</b> {{selected[0]}}
@@ -67,6 +69,7 @@
 
 import Board from './components/Board'
 import Timer from './components/Timer'
+//import Countdown from './components/countdown'
 
 export default {
   name: 'app',
@@ -79,12 +82,13 @@ export default {
       { text: 'Hard', color:'yellow', value: 20 },
       { text: 'Expert', color:'red', value: 36 }
       ],
-      img: []
+      img: [],
+      timer: 20
     }
   },
 
   components: {
-    Board, Timer
+    Board, Timer /*, Countdown*/
   },
   
   methods: {
@@ -105,8 +109,22 @@ export default {
           });
 
           this.img = puzzleArr
-     }
-  }
+    },
+
+    setTimer: function() {
+        window.setInterval(() => { 
+          if(this.timer>0){
+            this.timer--; 
+          }
+        }, 1000);
+    }
+  },
+/*
+    setTimer() {
+      var child = this.$refs.Countdown;
+      child.sub_setTimer();
+    }
+  }*/
 }
 
 </script>

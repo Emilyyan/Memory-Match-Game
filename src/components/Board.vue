@@ -88,7 +88,7 @@ export default {
               console.log(this.firstElementId);
               $("#"+firstID).flip('toggle');
               $("#"+key).flip('toggle'); 
-            }, 1500);
+            }, 800);
            
           }
           
