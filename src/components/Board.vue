@@ -12,6 +12,7 @@
                   :key="key" 
                   :img_src_idx="idx" 
                   @handleClick="tryMatch"
+                  :class="matchedItems[key]"
                 >
                 </square>
               </sui-grid>
@@ -31,6 +32,7 @@
                   :key="key" 
                   :img_src_idx="idx"
                   @handleClick="tryMatch"
+                  :class="matchedItems[key]"
                 >
                 </square>
               </sui-grid>
@@ -50,6 +52,7 @@
                   :key="key" 
                   :img_src_idx="idx"
                   @handleClick="tryMatch"
+                  :class="matchedItems[key]"
                 >
                 </square>
               </sui-grid>
@@ -68,6 +71,7 @@
                   :key="key" 
                   :img_src_idx="idx"
                   @handleClick="tryMatch"
+                  :class="matchedItems[key]"
                 >
                 </square>
               </sui-grid>
@@ -109,6 +113,9 @@ export default {
             //fade out animation in 1200ms
             $('#'+this.firstElementId).animate({opacity: 0.0}, 1200);
             $('#'+key).animate({opacity: 0.0}, 1200);
+            //unbind click event for matched items
+            this.$set(this.matchedItems, this.firstElementId, "disabled");
+ -          this.$set(this.matchedItems, key, "disabled");
           }  
           else{
             var firstID = this.firstElementId;
@@ -138,5 +145,8 @@ export default {
   clear: both;
   content: "";
   display: table;
+}
+.disabled {
+  pointer-events: none;
 }
 </style>
