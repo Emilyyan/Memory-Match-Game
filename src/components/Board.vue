@@ -1,16 +1,19 @@
 <template>
     <div>
-      <!--
-      <label>The hard level received by board is {{hard_level}}</label>
-      <br>
-
-      <label>{{board_img}}</label>-->
       <div class="board-row">
         <template v-if="hard_level === 12">
           <sui-grid class="container">
             <sui-grid-column :width="8">
               <sui-grid :columns="4">
-                <square v-for="(idx,key) in board_img" :id="key" :num="idx" :key="key" :img_src_idx="idx" @click.native="tryMatch(idx,key)" v-bind:class="matchedItems[key]"></square>
+                <square 
+                  v-for="(idx,key) in board_img" 
+                  :id="key" 
+                  :num="idx" 
+                  :key="key" 
+                  :img_src_idx="idx" 
+                  @handleClick="tryMatch"
+                >
+                </square>
               </sui-grid>
             </sui-grid-column>
             <sui-grid-column :width="8"/>
@@ -21,7 +24,15 @@
           <sui-grid class="container">
             <sui-grid-column :width="8">
               <sui-grid :columns="4">
-                <square v-for="(idx,key) in board_img" :id="key" :num="idx" :key="key" :img_src_idx="idx"></square>
+                <square 
+                  v-for="(idx,key) in board_img" 
+                  :id="key" 
+                  :num="idx" 
+                  :key="key" 
+                  :img_src_idx="idx"
+                  @handleClick="tryMatch"
+                >
+                </square>
               </sui-grid>
             </sui-grid-column>
             <sui-grid-column :width="8"/>
@@ -32,7 +43,15 @@
           <sui-grid class="container">
             <sui-grid-column :width="10">
               <sui-grid :columns="5">
-                <square v-for="(idx,key) in board_img" :id="key" :num="idx" :key="key" :img_src_idx="idx"></square>
+                <square 
+                  v-for="(idx,key) in board_img" 
+                  :id="key" 
+                  :num="idx" 
+                  :key="key" 
+                  :img_src_idx="idx"
+                  @handleClick="tryMatch"
+                >
+                </square>
               </sui-grid>
             </sui-grid-column>
             <sui-grid-column :width="6"/>
@@ -42,7 +61,15 @@
           <sui-grid class="container">
             <sui-grid-column :width="12">
               <sui-grid :columns="6">
-                <square v-for="(idx,key) in board_img" :id="key" :num="idx" :key="key" :img_src_idx="idx"></square>
+                <square 
+                  v-for="(idx,key) in board_img" 
+                  :id="key" 
+                  :num="idx" 
+                  :key="key" 
+                  :img_src_idx="idx"
+                  @handleClick="tryMatch"
+                >
+                </square>
               </sui-grid>
             </sui-grid-column>
             <sui-grid-column :width="4"/>
@@ -50,7 +77,6 @@
         </template>
       </div>
     </div>
-
 </template>
 
 <script>
@@ -78,18 +104,20 @@ export default {
         this.firstElementId = key;
       }
       else if(this.firstImgIdx){
+          
           if(this.firstImgIdx == idx && this.firstElementId != key){
-            this.$set(this.matchedItems, this.firstElementId, "matched");
-            this.$set(this.matchedItems, key, "matched");
+            //fade out animation in 1200ms
+            $('#'+this.firstElementId).animate({opacity: 0.0}, 1200);
+            $('#'+key).animate({opacity: 0.0}, 1200);
           }  
           else{
             var firstID = this.firstElementId;
             setTimeout(function(){ 
-              console.log(this.firstElementId);
-              $("#"+firstID).flip('toggle');
-              $("#"+key).flip('toggle'); 
-            }, 800);
-           
+              //console.log(this.firstElementId);
+              //flip both cards back
+              $("#"+firstID).flip(false);
+              $("#"+key).flip(false); 
+            }, 500);
           }
           
           this.firstElementId = null;
@@ -110,9 +138,5 @@ export default {
   clear: both;
   content: "";
   display: table;
-}
-
-.matched{
-  visibility: hidden
 }
 </style>

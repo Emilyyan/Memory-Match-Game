@@ -1,67 +1,79 @@
 <template>
   <div id="app">
-    <div class="start-interface">
+
+      <div class="start-interface">
+        <sui-grid
+          class="container"
+        >
+          <sui-grid-column>
+            <!--=======Dropdown menu to start game========-->
+            <sui-image size="medium" :src="logo"/>
+            <h1>Memory Match</h1>
+            <sui-dropdown
+              class="labeled teal icon"
+              icon="game"
+              :button="true"
+              text="Start Game"
+            >
+              <sui-dropdown-menu>
+                <sui-dropdown-item 
+                  v-for="(option,index) in hardLevel"  
+                  :value="option.value" 
+                  :key="index" 
+                  @click.native="setLevel(index);setTimer()"
+                >
+                  <sui-label :color="option.color" class="empty circular"/>
+                  {{ option.text }}
+                </sui-dropdown-item>
+              </sui-dropdown-menu>
+            </sui-dropdown>
+            <!--===========Dropdown menu ends============-->
+          </sui-grid-column>
+          
+        </sui-grid> 
+      </div>
+
       <sui-grid
         class="container"
+        divided
       >
-        <sui-grid-column>
-          <!--=======Dropdown menu to start game========-->
-          <sui-dropdown
-            class="labeled teal icon"
-            icon="game"
-            :button="true"
-            text="Start Game"
-          >
-            <sui-dropdown-menu>
-              <sui-dropdown-item 
-                v-for="(option,index) in hardLevel"  
-                :value="option.value" 
-                :key="index" 
-                @click.native="setLevel(index);setTimer()"
-              >
-                <sui-label :color="option.color" class="empty circular"/>
-                {{ option.text }}
-              </sui-dropdown-item>
-            </sui-dropdown-menu>
-          </sui-dropdown>
-          <!--===========Dropdown menu ends============-->
+        <sui-grid-column 
+          :width="4"
+        >  
+          <!--===Count down to Dec 25, 2017===-->
+          <sui-grid-row>
+            <br><b>Time Left: </b>{{timer}} seconds
+            <!--<Countdown></CountDown>-->
+          </sui-grid-row>
+          <sui-grid-row>
+            <b>Current level:</b> {{selected[0]}}
+          </sui-grid-row>
         </sui-grid-column>
-      </sui-grid> 
-    </div>
-
-    <sui-grid
-      class="container"
-      divided
-    >
-      <sui-grid-column 
-        :width="4"
-      >  
-        <!--===Count down to Dec 25, 2017===-->
-        <sui-grid-row>
-          <!--<b>Time:</b> <Timer date="Dec 25, 2017"/>-->
-          <br><b>Time Left: </b>{{timer}} seconds
-          <!--<Countdown></CountDown>-->
-        </sui-grid-row>
-        <sui-grid-row>
-          <b>Current level:</b> {{selected[0]}}
-        </sui-grid-row>
-      </sui-grid-column>
-      <sui-grid-column :width="12">
-        <Board v-bind:hard_level ="selected[0]" v-bind:board_img ="img"/>
-      </sui-grid-column>
-    </sui-grid>
-    
-    <div class="end-interface">
-      <sui-grid 
-        class="container"
-        :width="1"
-      >
-        <sui-grid-column
-        >
-          You won/lose!
-        </sui-grid-column>    
+        <sui-grid-column :width="12">
+          <Board v-bind:hard_level ="selected[0]" v-bind:board_img ="img"/>
+        </sui-grid-column>
       </sui-grid>
-    </div>
+      
+      <div class="end-interface">
+        <sui-grid 
+          class="container"
+          :width="1"
+        >
+          <sui-grid-column
+          >
+            <sui-button color="yellow" @click.native="showDimmer">End</sui-button>
+          </sui-grid-column>    
+        </sui-grid>
+      </div>
+
+      <sui-dimmer class="page" :inverted="false">
+        <div class="content">
+          You won! :)
+          <br/><br/>
+          <sui-button icon="undo" color="yellow" @click.native="dismissDimmer">Restart a game</sui-button>
+        </div>
+      </sui-dimmer>
+
   </div>
 </template>
 
@@ -75,6 +87,7 @@ export default {
   name: 'app',
   data () {
     return {
+      logo:"./static/logo.png",
       selected:[],
       hardLevel: [
       { text: 'Easy', color:'teal', value: 12 },
@@ -86,11 +99,14 @@ export default {
       timer: 20
     }
   },
-
   components: {
     Board, Timer /*, Countdown*/
   },
-  
+  mounted(){
+    $('.ui.dimmer').dimmer({
+      closable: false
+    });
+  },
   methods: {
     setLevel: function (index) {
       this.selected = []; 
@@ -98,7 +114,7 @@ export default {
 
       //generate shuffled img array
       let puzzleArr = [],
-          i = 1
+          i = 1;
 
           for (i=0; i < this.selected[0]; i++) {
             puzzleArr.push(Math.floor(i/2)+1);
@@ -108,23 +124,28 @@ export default {
               return Math.random() - 0.5
           });
 
-          this.img = puzzleArr
+          this.img = puzzleArr;
     },
-
     setTimer: function() {
-        window.setInterval(() => { 
-          if(this.timer>0){
-            this.timer--; 
-          }
-        }, 1000);
+      window.setInterval(() => { 
+        if(this.timer>0){
+          this.timer--; 
+        }
+      }, 1000);
+    },
+    /*
+      setTimer() {
+        var child = this.$refs.Countdown;
+        child.sub_setTimer();
+      }
+    }*/
+    showDimmer: function(){
+      $('.ui.dimmer').dimmer('show');
+    },
+    dismissDimmer: function(){
+      $('.ui.dimmer').dimmer('hide');
     }
-  },
-/*
-    setTimer() {
-      var child = this.$refs.Countdown;
-      child.sub_setTimer();
-    }
-  }*/
+  }
 }
 
 </script>

@@ -1,6 +1,6 @@
 <template>
     <sui-grid-column>
-      <div class="card" :id="id" @click="flip">
+      <div class="card" :id="id" @click="$emit('handleClick',num,id)">
         <div class="front">
           <sui-image :src="back_img_path" size="tiny" class="bordered"/>
         </div>
