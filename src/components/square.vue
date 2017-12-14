@@ -44,6 +44,7 @@ export default {
 .card{
   width:100%;
   height:76.78px;
+  cursor:pointer;
 }
 .card .front{
   background: #ffbaba;

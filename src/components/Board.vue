@@ -109,7 +109,7 @@ export default {
       handler: function (val, oldVal) { 
         //console.log('local time left ', val.time_left);
         if(val.time_left <= 0){
-          this.$emit('input', "Sorry! Time Out! You lose the game :(");
+          this.$emit('input', "Sorry, time's out! You lose the game :(");
           $('.ui.dimmer').dimmer('show');
         }
       },
@@ -150,7 +150,7 @@ export default {
           //console.log(this.square_matched);
           //console.log(this.local_interval_id);
           if(this.square_matched == this.hard_level)
-            {this.$emit('input', "Congratulations!!! You won the game! :)");
+            {this.$emit('input', "Congratulations!!! You win the game! :)");
             clearInterval(this.local_interval_id);
             $('.ui.dimmer').dimmer('show');
           }
