@@ -50,7 +50,7 @@
           </sui-grid-row>
         </sui-grid-column>
         <sui-grid-column :width="12">
-          <Board v-bind:hard_level ="selected[0]" v-bind:board_img ="img"/>
+          <Board v-bind:hard_level ="selected[0]" v-bind:board_img ="img" v-bind:time_left ="timer" v-bind:local_interval_id ="interval_id" v-model="resultInfo"/>
         </sui-grid-column>
       </sui-grid>
       
@@ -68,7 +68,7 @@
 
       <sui-dimmer class="page" :inverted="false">
         <div class="content">
-          You won! :)
+          {{resultInfo}}
           <br/><br/>
           <sui-button icon="undo" color="yellow" @click.native="dismissDimmer">Restart a game</sui-button>
         </div>
@@ -80,7 +80,6 @@
 <script>
 
 import Board from './components/Board'
-import Timer from './components/Timer'
 //import Countdown from './components/countdown'
 
 export default {
@@ -96,11 +95,13 @@ export default {
       { text: 'Expert', color:'red', value: 36 }
       ],
       img: [],
-      timer: 20
+      timer: 10,
+      interval_id: null,
+      resultInfo: "There is no result!!!"
     }
   },
   components: {
-    Board, Timer /*, Countdown*/
+    Board
   },
   mounted(){
     $('.ui.dimmer').dimmer({
@@ -127,7 +128,7 @@ export default {
           this.img = puzzleArr;
     },
     setTimer: function() {
-      window.setInterval(() => { 
+        this.interval_id = window.setInterval(() => { 
         if(this.timer>0){
           this.timer--; 
         }
