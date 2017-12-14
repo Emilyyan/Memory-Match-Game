@@ -2,10 +2,10 @@
     <sui-grid-column>
       <div class="card" :id="id" @click="$emit('handleClick',num,id)">
         <div class="front">
-          <sui-image :src="back_img_path" size="tiny" class="bordered"/>
+          <sui-image :src="back_img_path" size="tiny" class="rounded"/>
         </div>
         <div class="back">
-          <sui-image :src="img_src" size="tiny" class="bordered"/>
+          <sui-image :src="img_src" size="tiny" class="rounded"/>
         </div>
       </div>   
     </sui-grid-column>
@@ -46,10 +46,12 @@ export default {
   height:76.78px;
 }
 .card .front{
-  background: #656565;
+  background: #ffbaba;
+  border-radius: 0.8rem;
 }
 .card .back{
-  background-color: #d6f6ff;
+  background: #d6f6ff;
+  border-radius: 0.8rem;
 }
 
 </style>

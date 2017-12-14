@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+    <template v-if="showpage === 0">
       <div class="start-interface">
         <sui-grid
           class="container"
@@ -20,7 +20,7 @@
                   v-for="(option,index) in hardLevel"  
                   :value="option.value" 
                   :key="index" 
-                  @click.native="setLevel(index);setTimer()"
+                  @click.native="setLevel(index);setTimer();toGamePage();reset()"
                 >
                   <sui-label :color="option.color" class="empty circular"/>
                   {{ option.text }}
@@ -32,7 +32,8 @@
           
         </sui-grid> 
       </div>
-
+    </template>
+    <template v-if="showpage === 1">
       <sui-grid
         class="container"
         divided
@@ -40,20 +41,18 @@
         <sui-grid-column 
           :width="4"
         >  
-          <!--===Count down to Dec 25, 2017===-->
           <sui-grid-row>
-            <br><b>Time Left: </b>{{timer}} seconds
-            <!--<Countdown></CountDown>-->
+            <br><b>Time Left: </b>{{minutes}} : {{seconds}}
           </sui-grid-row>
           <sui-grid-row>
-            <b>Current level:</b> {{selected[0]}}
+            <b>Current level:</b> {{parseLevel}}
           </sui-grid-row>
         </sui-grid-column>
         <sui-grid-column :width="12">
-          <Board v-bind:hard_level ="selected[0]" v-bind:board_img ="img" v-bind:time_left ="timer" v-bind:local_interval_id ="interval_id" v-model="resultInfo"/>
+          <Board :hard_level ="selected[0]" :board_img ="img" :time_left ="timer" :local_interval_id ="interval_id" v-model="resultInfo"/>
         </sui-grid-column>
       </sui-grid>
-      
+    
       <div class="end-interface">
         <sui-grid 
           class="container"
@@ -65,12 +64,12 @@
           </sui-grid-column>    
         </sui-grid>
       </div>
-
+    </template> 
       <sui-dimmer class="page" :inverted="false">
         <div class="content">
           {{resultInfo}}
           <br/><br/>
-          <sui-button icon="undo" color="yellow" @click.native="dismissDimmer">Restart a game</sui-button>
+          <sui-button icon="undo" color="yellow" @click.native="dismissDimmer();toTitlePage()">Restart a game</sui-button>
         </div>
       </sui-dimmer>
 
@@ -80,13 +79,13 @@
 <script>
 
 import Board from './components/Board'
-//import Countdown from './components/countdown'
 
 export default {
   name: 'app',
   data () {
     return {
       logo:"./static/logo.png",
+      showpage: 0,
       selected:[],
       hardLevel: [
       { text: 'Easy', color:'teal', value: 12 },
@@ -95,9 +94,9 @@ export default {
       { text: 'Expert', color:'red', value: 36 }
       ],
       img: [],
-      timer: 10,
+      timer: 120,
       interval_id: null,
-      resultInfo: "There is no result!!!"
+      resultInfo: "OOps. I know that's too hard for you ;)!!!"
     }
   },
   components: {
@@ -109,6 +108,10 @@ export default {
     });
   },
   methods: {
+    reset: function(){
+      this.timer = 120;
+      this.resultInfo = "OOps. I know that's too hard for you ;)!!!";
+    },
     setLevel: function (index) {
       this.selected = []; 
       this.selected.push(this.hardLevel[index].value);
@@ -127,6 +130,7 @@ export default {
 
           this.img = puzzleArr;
     },
+
     setTimer: function() {
         this.interval_id = window.setInterval(() => { 
         if(this.timer>0){
@@ -134,17 +138,38 @@ export default {
         }
       }, 1000);
     },
-    /*
-      setTimer() {
-        var child = this.$refs.Countdown;
-        child.sub_setTimer();
-      }
-    }*/
+  
+    toGamePage: function(){
+      this.showpage = 1;
+    },
+    toTitlePage: function(){
+      this.showpage = 0;
+    },
     showDimmer: function(){
       $('.ui.dimmer').dimmer('show');
     },
     dismissDimmer: function(){
       $('.ui.dimmer').dimmer('hide');
+    }
+  },
+  computed: {
+    minutes: function(){
+      return Math.trunc(this.timer / 60);
+    },
+    seconds: function(){
+      return (this.timer % 60);
+    },
+    parseLevel: function(){
+      switch(this.selected[0]){
+        case 12:
+          return 'Easy';
+        case 16:
+          return 'Medium';
+        case 20:
+          return 'Hard';
+        case 36:
+          return 'Expert';
+      }
     }
   }
 }
@@ -158,5 +183,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 15px;
+}
+.start-interface{
+  background-image: url('./assets/title.jpeg');
+  background-size: auto 100%;
 }
 </style>
