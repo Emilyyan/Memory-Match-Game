@@ -1,7 +1,7 @@
 ## Pokemon-Memory-Match-Game
 
 A Vue.js project  
-A final project developed by me and [Yihua](https://github.com/luvnico) for course Web Front End Development, an online card match game using Vue.js and Semantic UI which can help train short-term memory.
+Final project developed by me and [Yihua](https://github.com/luvnico) for course Web Front End Development, an online card match game using Vue.js and Semantic UI which can help train short-term memory.
 
 ## Build Setup
 
